@@ -6,6 +6,20 @@ const todoController = {
 
         todoModel.get(_id)
             .then(data => {
+                if(data) {
+                    res.status(200).json(data)
+                } else {
+                    res.status(404).json({message: "no todos found"})
+                }
+            })
+            .catch(err => {
+                res.status(500).json({message: "could not get todos"})
+            })  
+    },
+
+    getAll: async (req, res) => {
+        todoModel.getAll()
+            .then(data => {
                 if(data.length > 0) {
                     res.status(200).json(data)
                 } else {
@@ -16,6 +30,7 @@ const todoController = {
                 res.status(500).json({message: "could not get todos"})
             })  
     },
+    
     post: async (req, res) => {
         let { title, done, duedate } = req.body;
 

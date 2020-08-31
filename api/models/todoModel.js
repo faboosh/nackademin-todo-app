@@ -7,13 +7,19 @@ const todoModel = {
         return todoDatastore.find(queryobj);
     },
 
+    getAll: () => {
+        return todoDatastore.find();
+    },
+
     post: (todo) => {
         //Create todo in DB and return promise
         return todoDatastore.insert(todo);
     },
+    
     put: (_id, newTodo) => {
         return todoDatastore.update({ _id }, { $set: newTodo }, { returnUpdatedDocs: true });
     },
+
     delete: (_id) => {
         return todoDatastore.remove({ _id });
     }
