@@ -1,28 +1,38 @@
-const Datastore = require('nedb-promises');
-const todoDatastore = Datastore.create(__dirname + '/../databases/todo.db');
+const mongoose = require('mongoose');
 
-const todoModel = {
-    get: (_id) => {
-        let queryobj = _id ? { _id } : {};
-        return todoDatastore.find(queryobj);
+const todoSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
     },
-
-    getAll: () => {
-        return todoDatastore.find();
+    done: {
+        type: Boolean,
+        required: true,
+        default: false
     },
-
-    post: (todo) => {
-        //Create todo in DB and return promise
-        return todoDatastore.insert(todo);
+    dueDate: {
+        type: Date
     },
-    
-    put: (_id, newTodo) => {
-        return todoDatastore.update({ _id }, { $set: newTodo }, { returnUpdatedDocs: true });
-    },
-
-    delete: (_id) => {
-        return todoDatastore.remove({ _id });
+},
+    {
+        timestamps: true
     }
+)
+
+todoSchema.statics.getByID = function(_id) {
+    return this.findById(_id)
 }
 
-module.exports = todoModel;
+todoSchema.statics.getAll = function() {
+    return this.find({})
+}
+
+todoSchema.statics.create = function(todo) {
+    return new this(todo).save();
+}
+
+todoSchema.statics.update = function(_id, todo) {
+    return this.updateOne({_id}, todo);
+}
+
+module.exports = mongoose.model('Todo', todoSchema);

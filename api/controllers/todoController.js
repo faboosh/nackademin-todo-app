@@ -32,13 +32,12 @@ const todoController = {
     },
     
     post: async (req, res) => {
-        let { title, done, duedate } = req.body;
+        let { title, duedate } = req.body;
 
-        if(title && typeof done !== 'undefined') {
-            const currDateISO = new Date().toISOString();
+        if(title) {
             if(typeof duedate === 'undefined') duedate = false;
 
-            todoModel.post({title, done, duedate ,created: currDateISO,modified: currDateISO})
+            todoModel.create({title, duedate })
                 .then(data => {
                     res.status(200).json(data)
                 })
@@ -59,10 +58,9 @@ const todoController = {
         if(_id) {
             if (title) newTodo.title = title;
             if (typeof done !== 'undefined') newTodo.done = done;
-            if (duedate) newTodo.duedate = new Date(duedate).toISOString();
-            newTodo.modified = new Date().toISOString();
+            if (duedate) newTodo.duedate = new Date(duedate);
     
-            todoModel.put(_id, newTodo)
+            todoModel.update(_id, newTodo)
                 .then(data => {
                     res.status(200).json(data)
                 })

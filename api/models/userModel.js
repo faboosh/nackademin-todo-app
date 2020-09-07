@@ -42,7 +42,7 @@ const userModel = {
                 if(!await userDatastore.findOne({username})) {
                     const user = await userDatastore.insert(newUser);
                     const token = generateUserToken(user);
-                    resolve({token});
+                    resolve(token);
                 } else {
                     reject(false);
                 }
@@ -52,18 +52,11 @@ const userModel = {
             }
         })
     },
-
-    /**
-     * 
-     * @param {*} user 
-     */
-
-
 }
 
 function generateUserToken({username, groups, _id}) {
     const token = jwt.sign({username, groups, _id}, process.env.SECRET);
-    return token;
+    return {token};
 }
 
 module.exports = userModel;
