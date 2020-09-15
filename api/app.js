@@ -6,6 +6,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const db = require('./databases/db');
+const auth = require('./middlewares/auth');
 
 console.log(process.env.SECRET);
 
@@ -17,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/api/todolists', todoListRouter);
+app.use('/api/todolists', auth.verifyToken, todoListRouter);
 app.use('/api/users', userRouter);
 app.use('/auth', authRouter);
 

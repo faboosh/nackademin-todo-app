@@ -9,10 +9,9 @@ const todoListSchema = new mongoose.Schema({
         type: String,
         required: true        
     },
-    done: {
-        type: Boolean,
-        required: true,
-        default: false
+    sharedWith: {
+        type: Array,
+        default: []
     }
 },
     {

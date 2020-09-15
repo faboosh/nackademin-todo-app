@@ -34,6 +34,13 @@ todoSchema.statics.getByID = function(_id) {
 todoSchema.statics.getAll = function() {
     return this.find({})
 }
+/**
+ * 
+ * @param {mongoDB filter} filter 
+ */
+todoSchema.statics.get = function(filter) {
+    return this.find(filter)
+}
 
 todoSchema.statics.create = function(todo) {
     return new this(todo).save();

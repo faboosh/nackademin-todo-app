@@ -18,21 +18,7 @@ const todoController = {
             })  
     },
 
-    getAllInList: async (req, res) => {
-        todoListModel.getAll()
-            .then(data => {
-                if(data.length > 0) {
-                    res.status(200).json(data)
-                } else {
-                    res.status(404).json({message: "no todos found"})
-                }
-            })
-            .catch(err => {
-                res.status(500).json({message: "could not get todos"})
-            })  
-    },
-    
-    post: async (req, res) => {
+    create: async (req, res) => {
         let { title, duedate } = req.body;
 
         if(title) {
@@ -95,6 +81,27 @@ const todoController = {
                 })
         } else {
             res.status(400).json({ message: "no ID supplied" })
+        }
+    },
+
+    getTodosInList: (req, res) => {
+        const { listID } = req.params;
+
+        if(listID) {
+            todoModel.get({ listID })
+                .then(data => {
+                    if(data.length > 0) {
+                        res.status(200).json(data)
+                    } else {
+                        res.status(404).json({message: "no todos found"})
+                    }
+                })
+
+                .catch(err => {
+                    res.status(500).json({ message: "Something went wrong" })
+                })
+        } else {
+            res.status(400).json({ message: "No list ID supplied" })
         }
     }
 }
