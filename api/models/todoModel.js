@@ -5,6 +5,14 @@ const todoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    listID: {
+        type: String,
+        required: true
+    },
+    createdByID: {
+        type: String,
+        required: true        
+    },
     done: {
         type: Boolean,
         required: true,
@@ -33,6 +41,18 @@ todoSchema.statics.create = function(todo) {
 
 todoSchema.statics.update = function(_id, todo) {
     return this.updateOne({_id}, todo);
+}
+
+todoSchema.statics.delete = function(_id) {
+    return this.findByIdAndDelete({_id});
+}
+
+todoSchema.statics.deleteAllInList = function(listID) {
+    return this.deleteMany({listID});
+}
+
+todoSchema.statics.deleteAll = function(_id) {
+    return this.deleteAll();
 }
 
 module.exports = mongoose.model('Todo', todoSchema);

@@ -1,5 +1,5 @@
 const express = require('express');
-const todoRouter = require('./routes/todoRouter');
+const todoListRouter = require('./routes/todoListRouter');
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
 const cors = require('cors');
@@ -11,11 +11,13 @@ console.log(process.env.SECRET);
 
 const app = express();
 
+app.use(express.static('public'));
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/api/todos', todoRouter);
+app.use('/api/todolists', todoListRouter);
 app.use('/api/users', userRouter);
 app.use('/auth', authRouter);
 
