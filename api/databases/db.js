@@ -27,6 +27,10 @@ async function connect() {
                 await mongod.stop();
             }
 
+            module.exports.dropDatabase = async () => {
+                await mongoose.connection.dropDatabase();
+            }
+
             break;
     }
 }

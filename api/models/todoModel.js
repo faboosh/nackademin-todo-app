@@ -59,7 +59,11 @@ todoSchema.statics.deleteAllInList = function(listID) {
 }
 
 todoSchema.statics.deleteAll = function(_id) {
-    return this.deleteAll();
+    return this.deleteMany({});
+}
+
+todoSchema.statics.count = async function(_id) {
+    return await this.find({}).length;
 }
 
 module.exports = mongoose.model('Todo', todoSchema);
