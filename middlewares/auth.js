@@ -1,8 +1,19 @@
 const jwt = require('jsonwebtoken');
+const todoListModel = require('../models/todoListModel');
 
 module.exports = {
-    canAccessList: (req, res, next) => {
-        next();
+    canAccessList: async (req, res, next) => {
+        const queryObj = {
+            userID: req.user._id, 
+            listID: req.params.listID
+        };
+
+        if(req.user.role === 'admin' || await todoListModel.isAccessibleByUser(queryObj)) {
+            next();
+        } else {
+            res.status(403).json({ message: "Not authorized to access todo list" })
+        } 
+
     },
     verifyToken: (req, res, next) => {
         try {

@@ -2,8 +2,8 @@ const router = require('express').Router();
 const todoListController = require('../controllers/todoListController');
 const auth = require('../middlewares/auth');
 
-//router.get('/', todoListController.getListsForUser);
-router.get('/:listID', todoListController.get);
+//router.get('/', todoListController.getAllAccessibleTodoLists);
+router.get('/:listID', auth.canAccessList, todoListController.getByID);
 //router.get('/:listID/todos', todoListController.getTodosInList);
 
 router.post('/', todoListController.create);

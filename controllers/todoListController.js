@@ -5,7 +5,7 @@ const todoController = {
     get: async (req, res) => {
         const { _id } = req.params;
 
-        todoListModel.get(_id)
+        todoListModel.get({_id})
             .then(data => {
                 if(data) {
                     res.status(200).json(data)
@@ -16,6 +16,26 @@ const todoController = {
             .catch(err => {
                 res.status(500).json({message: "could not get todos"})
             })  
+    },
+
+    getByID: async (req, res) => {
+        const { listID } = req.params;
+
+        todoListModel.findById(listID)
+            .then(data => {
+                if(data) {
+                    res.status(200).json(data)
+                } else {
+                    res.status(404).json({message: "no todos found"})
+                }
+            })
+            .catch(err => {
+                res.status(500).json({message: "could not get todos"})
+            })  
+    },
+
+    getAllAccessibleTodoLists: async (req, res) => {
+
     },
 
     create: async (req, res) => {
@@ -60,7 +80,7 @@ const todoController = {
         }
 
     },
-    
+
     delete: (req, res) => {
         let { _id } = req.params;
 
