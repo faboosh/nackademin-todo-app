@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "SET ENVIRONMENT=test && mocha --recursive",
-    "dev": "ENVIRONMENT=development && nodemon app.js",
-    "start": "ENVIRONMENT=production && nodemon app.js"
+    "test": "npx cross-env ENVIRONMENT=test && mocha --recursive",
+    "dev": "npx cross-env ENVIRONMENT=development && nodemon app.js",
+    "start": "npx cross-env ENVIRONMENT=production && nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -32,5 +32,8 @@
     "mongoose": "^5.10.2",
     "nedb": "^1.8.0",
     "nedb-promises": "^4.0.4"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
   }
 }

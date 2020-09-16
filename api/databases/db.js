@@ -7,7 +7,7 @@ const { ENVIRONMENT } = process.env;
 
 async function connect() {
     switch(ENVIRONMENT) {
-        case "test":
+        case "test" || "development":
             const mongod = new MongoMemoryServer();
             const uri = await mongod.getConnectionString();
 
@@ -20,9 +20,6 @@ async function connect() {
 
             await mongoose.connect(uri, options);
 
-            break;
-        case "development":
-            await mongoose.connect(process.env.DBCONNECTION, {useNewUrlParser: true, useUnifiedTopology: true});
             break;
         case "production":
             await mongoose.connect(process.env.DBCONNECTION, {useNewUrlParser: true, useUnifiedTopology: true});
