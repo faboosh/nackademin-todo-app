@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cross-env ENVIRONMENT=test SECRET=test npx mocha --recursive",
-    "dev": "npx cross-env ENVIRONMENT=development SECRET=test PORT=80 node app.js",
+    "dev": "npx cross-env ENVIRONMENT=development SECRET=test node app.js",
     "start": "npx cross-env ENVIRONMENT=production node app.js"
   },
   "repository": {
