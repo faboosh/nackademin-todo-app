@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const baseMethods = require('./baseMethods');
 
 const todoSchema = new mongoose.Schema({
     title: {
@@ -26,44 +27,10 @@ const todoSchema = new mongoose.Schema({
         timestamps: true
     }
 )
-
-todoSchema.statics.getByID = function(_id) {
-    return this.findById(_id)
-}
-
-todoSchema.statics.getAll = function() {
-    return this.find({})
-}
-/**
- * 
- * @param {mongoDB filter} filter 
- */
-todoSchema.statics.get = function(filter) {
-    return this.find(filter)
-}
-
-todoSchema.statics.create = function(todo) {
-    return new this(todo).save();
-}
-
-todoSchema.statics.update = function(_id, todo) {
-    return this.updateOne({_id}, todo);
-}
-
-todoSchema.statics.delete = function(_id) {
-    return this.findByIdAndDelete({_id});
-}
+todoSchema.statics = {...baseMethods};
 
 todoSchema.statics.deleteAllInList = function(listID) {
     return this.deleteMany({listID});
-}
-
-todoSchema.statics.deleteAll = function(_id) {
-    return this.deleteMany({});
-}
-
-todoSchema.statics.count = async function(_id) {
-    return await this.find({}).length;
 }
 
 module.exports = mongoose.model('Todo', todoSchema);

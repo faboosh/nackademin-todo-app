@@ -1,4 +1,5 @@
 const todoModel = require('../models/todoModel');
+const todoListModel = require('../models/todoListModel');
 const {expect} = require('chai')
 const db = require('../databases/db');
 
@@ -7,14 +8,14 @@ const createdByID = "djsjswgs1231gaffd";
 
 describe('Todo model', () => {
     before(async () => {
-        return db.connect;
+        return db.connect();
     })
 
     beforeEach(async () => {
         return todoModel.deleteAll();
     })
 
-    it('should insert todos', () => {
+    it('should insert todos into list', () => {
 
         let todos = [
             {
@@ -69,6 +70,24 @@ describe('Todo model', () => {
         expect(updatedTodo.title).to.equal(update.title)
         expect(updatedTodo.done).to.equal(update.done)
     })
+
+    it('should delete todo', async () => {
+        let todo = {
+            listID,
+            createdByID,
+            title: "todo 1",
+            done: false
+        }
+
+        const { _id } = await todoModel.create(todo);
+
+        await todoModel.delete(_id);
+
+        const count = await todoModel.count();
+
+        expect(count).to.equal(0)
+    })
+
 
     after(async() => {
         return db.disconnect();

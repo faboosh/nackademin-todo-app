@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx cross-env ENVIRONMENT=test SECRET=test npx mocha --recursive",
     "dev": "npx cross-env ENVIRONMENT=development SECRET=test node app.js",
-    "start": "npx cross-env ENVIRONMENT=production node app.js"
+    "start": "npx cross-env ENVIRONMENT=production PORT=3000 node app.js"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const baseMethods = require('./baseMethods');
 
 const todoListSchema = new mongoose.Schema({
     title: {
@@ -19,28 +20,6 @@ const todoListSchema = new mongoose.Schema({
     }
 )
 
-todoListSchema.statics.getByID = function(_id) {
-    return this.findById(_id)
-}
-
-todoListSchema.statics.getAll = function() {
-    return this.find({})
-}
-
-todoListSchema.statics.create = function(todoList) {
-    return new this(todoList).save();
-}
-
-todoListSchema.statics.update = function(_id, todoList) {
-    return this.updateOne({_id}, todoList);
-}
-
-todoListSchema.statics.delete = function(_id) {
-    return this.findByIdAndDelete({_id});
-}
-
-todoListSchema.statics.deleteAll = function(_id) {
-    return this.deleteAll();
-}
+todoListSchema.statics = {...baseMethods};
 
 module.exports = mongoose.model('TodoList', todoListSchema);
