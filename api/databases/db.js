@@ -16,12 +16,16 @@ async function connect() {
 
             const options = {
                 useNewUrlParser: true,
-                autoReconnect: true,
-                reconnectTries: Number.MAX_VALUE,
-                reconnectInterval: 1000
+                useUnifiedTopology: true
             }
 
             await mongoose.connect(uri, options);
+
+            module.exports.disconnect = async () => {
+                await mongoose.connection.dropDatabase();
+                await mongoose.connection.close();
+                await mongod.stop();
+            }
 
             break;
     }
