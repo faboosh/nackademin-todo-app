@@ -15,6 +15,7 @@ const userModel = {
 
                 const token = generateUserToken(user);
                 resolve(token);
+                
 
             } catch(err) {  
                 reject(false);
