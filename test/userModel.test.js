@@ -1,6 +1,7 @@
 const userModel = require('../models/userModel');
 const {expect} = require('chai')
 const db = require('../databases/db');
+const { assert } = require('console');
 
 describe('User model', () => {
     before(async () => {
@@ -28,9 +29,7 @@ describe('User model', () => {
             },
         ];
 
-        users = users.map(user => {
-            return userModel.register(user);
-        })
+        users = users.map(user => userModel.register(user));
 
         Promise.all(users)
             .then(users => {
@@ -66,6 +65,37 @@ describe('User model', () => {
                         const count = await userModel.count();
                         expect(count).to.equal(0);
                     })
+            })
+    })
+
+    it('should return token when user logs in', async () => {
+        const user = {
+            username: "Fabian",
+            password: "Fabian",
+        }
+
+        const createdUser = await userModel.register(user);
+
+        const { token } = await userModel.login(user);
+
+        expect(token).to.be.a('string');
+    })
+
+    it('should reject when user logs in with incorrect credentials', async () => {
+        const user = {
+            username: "Fabian",
+            password: "Fabian",
+        }
+
+        await userModel.register(user);
+
+        userModel.login(user)
+            .then(res => {
+                expect(false).to.equal(true);
+            })
+            .catch(err => {
+                console.log('failed');
+                expect(true).to.equal(true);
             })
     })
 

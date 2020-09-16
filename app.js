@@ -8,20 +8,22 @@ require('dotenv').config();
 const db = require('./databases/db');
 const auth = require('./middlewares/auth');
 
+const port = process.env.PORT;
 const app = express();
 
 app.use(express.static('public'));
-
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+console.log('Database connected');
 
 app.use('/api/todolists', auth.verifyToken, todoListRouter);
 app.use('/api/users', userRouter);
 app.use('/auth', authRouter);
 
-
-const port = process.env.PORT;
-app.listen(port, () => {
-    console.log(`API Running on port ${port}`);
+db.connect().then(() => {
+    app.listen(port, () => {
+        console.log(`API Running on port ${port}`);
+    })
 })
+

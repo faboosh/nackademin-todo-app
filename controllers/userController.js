@@ -2,7 +2,7 @@ const userModel = require('../models/userModel');
 
 const userController = {
     login: async (req, res) => {
-        if(req.body.hasOwnProperty('username'), req.body.hasOwnProperty('password')) {
+        if(req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password')) {
             const { username, password } = req.body;
             try {
                 const token = await userModel.login({ username, password });
@@ -16,12 +16,13 @@ const userController = {
                 console.error('error: ', err);
                 res.status(500).json({message: "internal server error"})
             }
-
+        } else {
+            res.status(400).json({message: "missing credentials"})
         }
     },
 
     register: async (req, res) => {
-        if(req.body.hasOwnProperty('username'), req.body.hasOwnProperty('password')) {
+        if(req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password')) {
             const { username, password } = req.body;
 
             try {
@@ -33,8 +34,10 @@ const userController = {
                     res.status(401).json({message: "invalid credentials"});
                 }
             } catch(err) {
-                res.status(500).json({message: "user could not be created"})
+                res.status(500).json({message: "user could not be created", err})
             }
+        } else {
+            res.status(400).json({message: "missing credentials"})
         }
     } 
 }
