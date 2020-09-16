@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cross-env ENVIRONMENT=test SECRET=test npx mocha --recursive",
-    "dev": "npx cross-env ENVIRONMENT=development SECRET=test nodemon app.js",
-    "start": "npx cross-env ENVIRONMENT=production nodemon app.js"
+    "dev": "npx cross-env ENVIRONMENT=development SECRET=test node app.js",
+    "start": "npx cross-env ENVIRONMENT=production node app.js"
   },
   "repository": {
     "type": "git",
