@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "SET ENVIRONMENT=test && mocha --recursive",
-    "dev": "ENVIRONMENT=development && nodemon app.js"
+    "dev": "ENVIRONMENT=development && nodemon app.js",
+    "start": "ENVIRONMENT=production && nodemon app.js"
   },
   "repository": {
     "type": "git",
