@@ -52,8 +52,6 @@ const todoController = {
         let { title, done, duedate } = req.body;
         let { _id } = req.params;
         let newTodo = {}; 
-        
-        console.log(req);
 
         if(_id) {
             if (title) newTodo.title = title;

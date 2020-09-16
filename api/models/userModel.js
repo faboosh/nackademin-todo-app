@@ -11,11 +11,9 @@ const userModel = {
                 if(!user) resolve(false);
 
                 const valid = bcrypt.compareSync(password, user.passwordHash);
-                console.log('is valid ', valid);
                 if(!valid) resolve(false);
 
                 const token = generateUserToken(user);
-                console.log(token);
                 resolve(token);
 
             } catch(err) {  

@@ -8,8 +8,6 @@ require('dotenv').config();
 const db = require('./databases/db');
 const auth = require('./middlewares/auth');
 
-console.log(process.env.SECRET);
-
 const app = express();
 
 app.use(express.static('public'));

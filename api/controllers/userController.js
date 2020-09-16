@@ -6,7 +6,6 @@ const userController = {
             const { username, password } = req.body;
             try {
                 const token = await userModel.login({ username, password });
-                console.log(token);
 
                 if(token) {
                     res.status(200).json(token);

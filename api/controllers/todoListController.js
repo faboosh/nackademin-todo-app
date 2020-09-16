@@ -19,29 +19,29 @@ const todoController = {
     },
 
     create: async (req, res) => {
-        let { title, duedate } = req.body;
+        let { title, sharedWith } = req.body;
+        const { _id } = req.user;
 
-        if(title) {
-            if(typeof duedate === 'undefined') duedate = false;
+        if(title && _id) {
+            if(typeof sharedWith === 'undefined') sharedWith = [];
 
-            todoListModel.create({title, duedate })
+            todoListModel.create({title, createdByID: _id })
                 .then(data => {
                     res.status(200).json(data)
                 })
                 .catch(err => {
-                    res.status(500).json(err)
+                    res.status(500).json(err.message)
                 })      
         } else {
-            res.status(400).json({message: "invalid todo formatting"})
+            res.status(400).json({message: "invalid todo list formatting"})
         }
     },
 
     put: async (req, res) => {
+        
         let { title, done, duedate } = req.body;
         let { _id } = req.params;
         let newTodo = {}; 
-        
-        console.log(req);
 
         if(_id) {
             if (title) newTodo.title = title;
