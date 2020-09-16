@@ -10,6 +10,7 @@ module.exports = {
             const token = authorizationHeader.substr(authorizationHeader.lastIndexOf(' ')+1);
             const user = jwt.verify(token, process.env.SECRET);
             req.user = user;
+            
             next();
         } catch(err) {
             res.status(403).json({ message: "Not signed in" })
