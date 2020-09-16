@@ -69,7 +69,6 @@ describe('User model', () => {
             })
     })
 
-
     after(async () => {
         return db.disconnect();
     })
