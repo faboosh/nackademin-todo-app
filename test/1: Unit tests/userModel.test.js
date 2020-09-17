@@ -73,7 +73,7 @@ describe('User model', () => {
             password: "Fabian",
         }
 
-        const createdUser = await userModel.register(user);
+        await userModel.register(user);
 
         const { token } = await userModel.login(user);
 
@@ -93,7 +93,6 @@ describe('User model', () => {
                 expect(false).to.equal(true);
             })
             .catch(err => {
-                console.log('failed');
                 expect(true).to.equal(true);
             })
     })

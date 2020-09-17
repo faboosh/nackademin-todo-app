@@ -1,5 +1,4 @@
 const todoModel = require('../../models/todoModel');
-const todoListModel = require('../../models/todoListModel');
 const {expect} = require('chai')
 const db = require('../../databases/db');
 

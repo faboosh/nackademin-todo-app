@@ -5,10 +5,7 @@ const authRouter = require('./routes/authRouter');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-const db = require('./databases/db');
 const auth = require('./middlewares/auth');
-
-const port = process.env.PORT;
 const app = express();
 
 app.use(express.static('public'));
@@ -20,10 +17,5 @@ app.use('/api/todolists', auth.verifyToken, todoListRouter);
 app.use('/api/users', userRouter);
 app.use('/auth', authRouter);
 
-db.connect().then(() => {
-    console.log('Database connected');
-    app.listen(port, () => {
-        console.log(`App running on port ${port}`);
-    })
-})
+module.exports = app;
 
