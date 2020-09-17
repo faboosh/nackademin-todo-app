@@ -17,20 +17,18 @@ describe('Auth and user routes', () => {
 
         
 
-        this.currentTest.user = await request(app)
-                                            .post('/api/users/register')
-                                            .send(user)
-                                            .then(res => res.body)
+        this.currentTest.user = 
+            await request(app)
+                .post('/api/users/register')
+                .send(user)
+                .then(res => res.body)
 
-        this.currentTest.token = await request(app)                                    
-                                            .post('/auth')
-                                            .send(user)
-                                            .then(res => res.body.token)
+        this.currentTest.token = 
+            await request(app)                                    
+                .post('/auth')
+                .send(user)
+                .then(res => res.body.token)
     })
-
-    // beforeEach(async () => {
-    //     return Promise.all[todoModel.deleteAll(), todoListModel.deleteAll()];
-    // })
 
     it('should return valid user after registration', async function() {
         const newUser = {
@@ -75,6 +73,21 @@ describe('Auth and user routes', () => {
                 )
                 .then(res => {
                     expect(res).to.have.status(401);
+                    expect(res.body).to.have.own.property('message');
+                })
+    })
+
+    it('should throw error if username exists', async function() {
+        request(app)                                    
+                .post('/api/users/register')
+                .send(
+                    {
+                        username: "Fabian",
+                        password: "Fabian"
+                    }
+                )
+                .then(res => {
+                    expect(res).to.have.status(500);
                     expect(res.body).to.have.own.property('message');
                 })
     })

@@ -15,6 +15,7 @@ module.exports = {
         } 
 
     },
+
     wasCreatedByUser: async (req, res, next) => {
         const queryObj = {
             userID: req.user._id, 
@@ -26,8 +27,16 @@ module.exports = {
         } else {
             res.status(403).json({ message: "Not authorized to access todo list" })
         } 
-
     },
+
+    isAdmin: async (req, res, next) => {
+        if(req.user.role === 'admin' && req.user) {
+            next();
+        } else {
+            res.status(403).json({ message: "Not an admin" })
+        } 
+    },
+
     verifyToken: (req, res, next) => {
         try {
             const authorizationHeader = req.headers.authorization;

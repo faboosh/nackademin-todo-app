@@ -11,8 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/api/app.js",
-            "cwd": "${workspaceFolder}/api"
+            "program": "${workspaceFolder}/start.js",
         }
     ]
 }

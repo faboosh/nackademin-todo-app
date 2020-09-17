@@ -10,7 +10,7 @@ router.get('/:listID/todos', auth.canAccessList, todoController.getTodosInList);
 router.post('/', todoListController.create);
 router.post('/:listID/todos', todoController.addTodoToList);
 
-router.patch('/:listID', auth.canAccessList, todoListController.update);
+router.patch('/:listID', auth.wasCreatedByUser, todoListController.update);
 router.patch('/:listID/todos/:todoID', auth.canAccessList, todoController.update);
 
 router.delete('/:listID', auth.wasCreatedByUser, todoListController.delete);

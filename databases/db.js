@@ -12,7 +12,7 @@ async function connect() {
             break;
         default:
             const mongod = new MongoMemoryServer();
-            const uri = await mongod.getConnectionString();
+            const uri = await mongod.getUri();
 
             const options = {
                 useNewUrlParser: true,
