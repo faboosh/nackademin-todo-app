@@ -31,7 +31,7 @@ const todoController = {
             })  
     },
     
-    post: async (req, res) => {
+    create: async (req, res) => {
         let { title, duedate } = req.body;
 
         if(title) {
@@ -48,17 +48,17 @@ const todoController = {
             res.status(400).json({message: "invalid todo formatting"})
         }
     },
-    put: async (req, res) => {
+    update: async (req, res) => {
         let { title, done, duedate } = req.body;
-        let { _id } = req.params;
+        let { todoID } = req.params;
         let newTodo = {}; 
 
-        if(_id) {
+        if(todoID) {
             if (title) newTodo.title = title;
             if (typeof done !== 'undefined') newTodo.done = done;
             if (duedate) newTodo.duedate = new Date(duedate);
     
-            todoModel.update(_id, newTodo)
+            todoModel.update(todoID, newTodo)
                 .then(data => {
                     res.status(200).json(data)
                 })
@@ -71,10 +71,10 @@ const todoController = {
 
     },
     delete: (req, res) => {
-        let { _id } = req.params;
+        let { todoID } = req.params;
 
-        if(_id) {    
-            todoModel.delete(_id)
+        if(todoID) {    
+            todoModel.delete(todoID)
                 .then(data => {
                     res.status(200).json(data);
                 })
@@ -83,6 +83,49 @@ const todoController = {
                 })
         } else {
             res.status(400).json({ message: "no ID supplied" })
+        }
+    },
+
+    addTodoToList: (req, res) => {
+        const { listID } = req.params;
+        const createdByID = req.user._id;
+        let { title, duedate } = req.body;
+
+
+        if(listID && createdByID) {
+            if(typeof duedate === 'undefined') duedate = false;
+
+            todoModel.create({ listID, createdByID, title, duedate })
+                .then(data => {
+                    res.status(200).json(data)
+                })
+
+                .catch(err => {
+                    res.status(500).json({ message: "Something went wrong" })
+                })
+        } else {
+            res.status(400).json({ message: "No list ID supplied" })
+        }        
+    },
+
+    getTodosInList: (req, res) => {
+        const { listID } = req.params;
+
+        if(listID) {
+            todoModel.get({ listID })
+                .then(data => {
+                    if(data.length > 0) {
+                        res.status(200).json(data)
+                    } else {
+                        res.status(404).json({message: "no todos found"})
+                    }
+                })
+
+                .catch(err => {
+                    res.status(500).json({ message: "Something went wrong" })
+                })
+        } else {
+            res.status(400).json({ message: "No list ID supplied" })
         }
     }
 }

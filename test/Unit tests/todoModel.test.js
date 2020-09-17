@@ -1,7 +1,7 @@
-const todoModel = require('../models/todoModel');
-const todoListModel = require('../models/todoListModel');
+const todoModel = require('../../models/todoModel');
+const todoListModel = require('../../models/todoListModel');
 const {expect} = require('chai')
-const db = require('../databases/db');
+const db = require('../../databases/db');
 
 const listID = "fhhdflasf";
 const createdByID = "djsjswgs1231gaffd"; 

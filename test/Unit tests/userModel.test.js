@@ -1,7 +1,6 @@
-const userModel = require('../models/userModel');
+const userModel = require('../../models/userModel');
 const {expect} = require('chai')
-const db = require('../databases/db');
-const { assert } = require('console');
+const db = require('../../databases/db');
 
 describe('User model', () => {
     before(async () => {

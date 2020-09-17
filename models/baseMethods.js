@@ -16,7 +16,7 @@ module.exports = {
     },
 
     update: function(_id, todoList) {
-        return this.updateOne({_id}, todoList);
+        return this.findOneAndUpdate({ _id }, todoList, { new: true });
     },
     
     deleteAll: function(filter = {}) {

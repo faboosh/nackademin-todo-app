@@ -15,15 +15,15 @@ app.use(express.static('public'));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-console.log('Database connected');
 
 app.use('/api/todolists', auth.verifyToken, todoListRouter);
 app.use('/api/users', userRouter);
 app.use('/auth', authRouter);
 
 db.connect().then(() => {
+    console.log('Database connected');
     app.listen(port, () => {
-        console.log(`API Running on port ${port}`);
+        console.log(`App running on port ${port}`);
     })
 })
 

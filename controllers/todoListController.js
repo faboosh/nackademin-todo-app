@@ -35,7 +35,19 @@ const todoController = {
     },
 
     getAllAccessibleTodoLists: async (req, res) => {
+        const { _id } = req.user;
 
+        todoListModel.getAllAccessibleTodoLists(_id)
+            .then(data => {
+                if(data) {
+                    res.status(200).json(data)
+                } else {
+                    res.status(404).json({message: "no todos lists found"})
+                }
+            })
+            .catch(err => {
+                res.status(500).json({message: "could not get todos lists"})
+            })          
     },
 
     create: async (req, res) => {
@@ -57,18 +69,16 @@ const todoController = {
         }
     },
 
-    put: async (req, res) => {
-        
-        let { title, done, duedate } = req.body;
-        let { _id } = req.params;
-        let newTodo = {}; 
+    update: async (req, res) => {     
+        let { title, sharedWith } = req.body;
+        let { listID } = req.params;
+        let newTodoList = {}; 
 
-        if(_id) {
-            if (title) newTodo.title = title;
-            if (typeof done !== 'undefined') newTodo.done = done;
-            if (duedate) newTodo.duedate = new Date(duedate);
+        if(listID) {
+            if (title) newTodoList.title = title;
+            if (sharedWith) newTodoList.sharedWith = sharedWith;
     
-            todoListModel.update(_id, newTodo)
+            todoListModel.update(listID, newTodoList)
                 .then(data => {
                     res.status(200).json(data)
                 })
@@ -82,47 +92,25 @@ const todoController = {
     },
 
     delete: (req, res) => {
-        let { _id } = req.params;
+        let { listID } = req.params;
 
-        if(_id) {    
-
-            todoModel.deleteAllInList(_id)
+        if(listID) {
+            todoModel.deleteAllInList(listID)
                 .then(() => {
-
+                    todoListModel.delete(listID)
+                        .then(data => {
+                            res.status(200).json(data);
+                        })
+                        .catch(err => {
+                            res.status(500).json({message: "could not delete todo list"})
+                        })
                 })
                 .catch(err => {
                     res.status(500).json({message: "could not delete todos in todo list"})
                 })
-            todoListModel.delete(_id)
-                .then(data => {
-                    res.status(200).json(data);
-                })
-                .catch(err => {
-                    res.status(500).json({message: "could not delete todo list"})
-                })
+
         } else {
             res.status(400).json({ message: "no ID supplied" })
-        }
-    },
-
-    getTodosInList: (req, res) => {
-        const { listID } = req.params;
-
-        if(listID) {
-            todoModel.get({ listID })
-                .then(data => {
-                    if(data.length > 0) {
-                        res.status(200).json(data)
-                    } else {
-                        res.status(404).json({message: "no todos found"})
-                    }
-                })
-
-                .catch(err => {
-                    res.status(500).json({ message: "Something went wrong" })
-                })
-        } else {
-            res.status(400).json({ message: "No list ID supplied" })
         }
     }
 }
