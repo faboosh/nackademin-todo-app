@@ -17,7 +17,7 @@ describe('Auth and user routes', () => {
 
         this.currentTest.user = 
             await request(app)
-                .post('/api/users/register')
+                .post('/api/users')
                 .send(user)
                 .then(res => res.body)
 
@@ -35,7 +35,7 @@ describe('Auth and user routes', () => {
         }
 
         request(app)                                    
-                .post('/api/users/register')
+                .post('/api/users')
                 .send(newUser)
                 .then(res => {
                     expect(res).to.have.status(200);
@@ -77,7 +77,7 @@ describe('Auth and user routes', () => {
 
     it('should throw error if username exists', async function() {
         request(app)                                    
-                .post('/api/users/register')
+                .post('/api/users')
                 .send(
                     {
                         username: "Fabian",
