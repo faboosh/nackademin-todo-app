@@ -23,11 +23,11 @@ const todoController = {
 
         todoListModel.findById(listID)
             .then(data => {
-                if(data) {
+                data ?
                     res.status(200).json(data)
-                } else {
+                :
                     res.status(404).json({message: "no todos found"})
-                }
+                
             })
             .catch(err => {
                 res.status(500).json({message: "could not get todos"})
@@ -39,11 +39,11 @@ const todoController = {
 
         todoListModel.getAllAccessibleTodoLists(_id)
             .then(data => {
-                if(data) {
+                data ?
                     res.status(200).json(data)
-                } else {
+                :
                     res.status(404).json({message: "no todos lists found"})
-                }
+                
             })
             .catch(err => {
                 res.status(500).json({message: "could not get todos lists"})

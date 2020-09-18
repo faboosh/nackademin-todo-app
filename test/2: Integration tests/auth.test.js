@@ -15,8 +15,6 @@ describe('Auth and user routes', () => {
             password: "Fabian"
         }
 
-        
-
         this.currentTest.user = 
             await request(app)
                 .post('/api/users/register')

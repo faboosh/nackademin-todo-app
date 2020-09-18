@@ -2,6 +2,7 @@ const express = require('express');
 const todoListRouter = require('./routes/todoListRouter');
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
+const GDPRRouter = require('./routes/GDPRRouter');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 
 app.use('/api/todolists', auth.verifyToken, todoListRouter);
 app.use('/api/users', userRouter);
+app.use('/gdpr', auth.verifyToken, GDPRRouter);
 app.use('/auth', authRouter);
 
 module.exports = app;

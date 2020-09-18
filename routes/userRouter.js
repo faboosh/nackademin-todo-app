@@ -8,7 +8,7 @@ router.get('/', userController.getAll);
 // router.put('/:_id', userController.put);
 router.delete('/', auth.verifyToken, userController.delete);
 router.delete('/:_id', auth.verifyToken, auth.isAdmin, userController.delete);
-router.post('/register', userController.register);
+router.post('/', userController.register);
 
 
 module.exports = router;

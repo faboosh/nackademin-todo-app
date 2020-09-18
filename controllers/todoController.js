@@ -1,4 +1,5 @@
 const todoModel = require('../models/todoModel');
+const utils = require('./controllerUtils');
 
 const todoController = {
     get: async (req, res) => {
@@ -18,17 +19,19 @@ const todoController = {
     },
 
     getAll: async (req, res) => {
-        todoModel.getAll()
-            .then(data => {
-                if(data.length > 0) {
-                    res.status(200).json(data)
-                } else {
-                    res.status(404).json({message: "no todos found"})
-                }
-            })
-            .catch(err => {
-                res.status(500).json({message: "could not get todos"})
-            })  
+        try {
+            const todos = 
+                await utils.sort({
+                    req,
+                    model: todoModel,
+                    sortKey: 'title'
+                })
+            res.status(200).json(todos);       
+            
+        } catch(err) {
+            console.error(err.message);
+            res.status(500).json({message: "could not complete request"})
+        }
     },
     
     create: async (req, res) => {
@@ -112,7 +115,7 @@ const todoController = {
         const { listID } = req.params;
 
         if(listID) {
-            todoModel.get({ listID })
+            utils.sort({ req, model: todoModel, sortKey: 'title', filter: { listID } })
                 .then(data => {
                     if(data.length > 0) {
                         res.status(200).json(data)

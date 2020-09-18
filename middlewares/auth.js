@@ -48,5 +48,9 @@ module.exports = {
         } catch(err) {
             res.status(403).json({ message: "Not signed in" })
         }
+    },
+
+    hasAcceptedCookiePolicy: (req, res, next) => {
+        
     }
 }
