@@ -1,26 +1,16 @@
 <template>
   <div class="home">
-    <div id="hero">
-      <div class="text">
-        <div class="title">
-          <h1 class="rainbow-bg-text">TASKTRACKER</h1>
-        </div>
-        <h4>A neater way to organize your tasks</h4>
-      </div>
-      <LoginForm class="login-form"/>
-    </div>
+    lol
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import LoginForm from '@/components/LoginForm.vue'
 
 
 export default {
-  name: 'Home',
+  name: 'TodoLists',
   components: {
-    LoginForm
   }
 }
 </script>

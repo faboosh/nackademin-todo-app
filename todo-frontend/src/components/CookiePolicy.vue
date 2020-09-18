@@ -1,6 +1,6 @@
 <template>
   <div id="cookie-policy" :class="{ collapsed: accepted }">
-    <p>Hey there, please accept our <router-link class="link" to="/">cookie policy</router-link> before using this application</p>
+    <p>Hey there, please accept our <router-link class="link" to="/cookiepolicy">cookie policy</router-link> before using this application</p>
     <button @click="acceptCookies" class="accept">Accept</button>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
   methods: {
     acceptCookies() {
       this.accepted = true;
+      localStorage.setItem('acceptedCookies', true);
     }
   }
 }

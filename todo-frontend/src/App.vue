@@ -2,11 +2,25 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
+      <router-link to="/cookiepolicy">Cookie policy</router-link>
+      <router-link to="/privacypolicy">Privacy policy</router-link>
     </div>
     <router-view/>
+    <CookiePolicy/>
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import CookiePolicy from '@/components/CookiePolicy.vue'
+
+export default {
+  name: 'Home',
+  components: {
+    CookiePolicy
+  }
+}
+</script>
 
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
@@ -46,20 +60,20 @@
       repeating-linear-gradient(0deg,  
                                 rgba(0,0,0,0) 0,
                                 rgba(0,0,0,0) 10px,
-                                #181818 10px,
-                                #181818 20px,
+                                #222 10px,
+                                #222 20px,
                                 ),
       repeating-linear-gradient(135deg,  
                                 rgba(0,0,0,0) 0,
                                 rgba(0,0,0,0) 10px,
-                                #181818 10px,
-                                #181818 20px,
+                                #222 10px,
+                                #222 20px,
                                 ),
       repeating-linear-gradient(45deg,  
-                                #111 0,
-                                #111 10px,
-                                #181818 10px,
-                                #181818 15px,
+                                #151515 0,
+                                #151515 10px,
+                                #222 10px,
+                                #222 15px,
                                 )
 
 
@@ -70,12 +84,19 @@
     background: #222;
     padding: 10px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
 
     a {
       text-decoration: none;
-      margin-right: 10px;
+      margin-left: 10px;
+      padding-right: 10px;
       font-size: 0.8em;
+      border-right: 3px solid white;
+
+      &:first-child {
+        padding-left: 10px;
+        border-left: 3px solid white;
+      }
     }
   }
 
